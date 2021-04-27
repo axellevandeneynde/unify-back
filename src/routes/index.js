@@ -1,3 +1,3 @@
 module.exports = (app) => {
-    require('./user/hello')(app);
+    require('./news/new-rss-feed')(app);
 }
