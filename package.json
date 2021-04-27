@@ -1,0 +1,23 @@
+{
+  "name": "unify-back",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axellevandeneynde/unify-back.git"
+  },
+  "author": "Axelle Vanden Eynde",
+  "bugs": {
+    "url": "https://github.com/axellevandeneynde/unify-back/issues"
+  },
+  "homepage": "https://github.com/axellevandeneynde/unify-back#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
