@@ -1,7 +1,7 @@
 const express = require('express')
 const FeedParser = require('feedparser');
 const fetch = require('node-fetch');
-const fs = require('fs');
+// const fs = require('fs');
 
 module.exports = function (app) {
     app.use(express.json());
@@ -54,7 +54,8 @@ async function parseFeed(rssFeed) {
     });
 
     feedparser.on('finish', function () {
-        fs.writeFileSync('parsedFeed.json', JSON.stringify(parsedFeed))
+        // fs.writeFileSync('parsedFeed.json', JSON.stringify(parsedFeed))
+        console.log(parsedFeed);
     })
 
 }
