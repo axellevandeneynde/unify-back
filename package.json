@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/axellevandeneynde/unify-back#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "feedparser": "^2.2.10",
     "node-fetch": "^2.6.1",
