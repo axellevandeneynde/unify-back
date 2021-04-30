@@ -6,7 +6,7 @@ const routes = require('./routes/index')(app);
 const port = process.env.PORT || 3000;
 
 var corsOptions = {
-    origin: 'http://localhost:3000/',
+    origin: 'http://localhost:3000',
     optionsSuccessStatus: 200
 }
 
