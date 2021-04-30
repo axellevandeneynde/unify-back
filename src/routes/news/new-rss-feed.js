@@ -5,7 +5,6 @@ const fetch = require('node-fetch');
 
 module.exports = function (app) {
 
-    app.use(cors())
     app.use(express.json());
 
     app.post('/new-rss-feed', async (req, res) => {
