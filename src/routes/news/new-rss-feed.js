@@ -15,7 +15,9 @@ module.exports = function (app) {
 
         parseFeed(rssFeed);
 
-        res.send("hello");
+        res.send({
+            "status": "submitted"
+        });
     });
 }
 
