@@ -44,6 +44,7 @@ module.exports = function (app) {
                     res.send({
                         "status": "this rss feed already exists, check the url"
                     });
+                    getNews();
                     client.close();
                 }
             });

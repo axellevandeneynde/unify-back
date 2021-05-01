@@ -97,7 +97,7 @@ function formatArticle(item, rssFeedInfo) {
         labels: [],
         id: item.guid || item.link,
         rss_categories: item.categories,
-        source_logo: rssFeedInfo.url,
+        source_logo: rssFeedInfo.logo,
         source_name: rssFeedInfo.name,
         source_description: rssFeedInfo.description,
         source_website: rssFeedInfo.website,
