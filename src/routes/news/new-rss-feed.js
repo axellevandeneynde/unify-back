@@ -1,8 +1,7 @@
 const express = require('express')
-const FeedParser = require('feedparser');
-const fetch = require('node-fetch');
 const MongoClient = require('mongodb').MongoClient;
-var _ = require('lodash');
+const _ = require('lodash');
+const getNews = require('../../news-collector/getNews');
 // const fs = require('fs');
 
 module.exports = function (app) {
@@ -39,6 +38,7 @@ module.exports = function (app) {
                             "status": "added to DB"
                         });
                         client.close();
+                        getNews();
                     })
                 } else {
                     res.send({
