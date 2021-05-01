@@ -1,6 +1,7 @@
 const express = require('express')
-const FeedParser = require('feedparser');
-const fetch = require('node-fetch');
+const MongoClient = require('mongodb').MongoClient;
+const _ = require('lodash');
+const getNews = require('../../news-collector/getNews');
 // const fs = require('fs');
 
 module.exports = function (app) {
@@ -8,61 +9,45 @@ module.exports = function (app) {
     app.use(express.json());
 
     app.post('/new-rss-feed', async (req, res) => {
-        const rssFeed = req.body;
+        const rssFeedInfo = req.body;
 
         console.log('submitted:');
-        console.log(rssFeed);
+        console.log(rssFeedInfo);
 
-        parseFeed(rssFeed);
-
-        res.send({
-            "status": "submitted"
+        const uri = "mongodb+srv://axelle:unifymongodb140@cluster0.ipi5k.mongodb.net/unify?retryWrites=true&w=majority";
+        const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        client.connect(async err => {
+            const newsSources = client.db("unify").collection("newsSources");
+            // check if rss feed is already in db
+            newsSources.findOne({ url: rssFeedInfo.url }, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.send({
+                        "status": "something went wrong (1)"
+                    });
+                    client.close();
+                }
+                if (_.isNil(result)) {
+                    newsSources.insertOne(rssFeedInfo, (err, response) => {
+                        if (err) {
+                            res.send({
+                                "status": "something went wrong (2)"
+                            });
+                        }
+                        res.send({
+                            "status": "added to DB"
+                        });
+                        client.close();
+                        getNews();
+                    })
+                } else {
+                    res.send({
+                        "status": "this rss feed already exists, check the url"
+                    });
+                    getNews();
+                    client.close();
+                }
+            });
         });
     });
-}
-
-async function parseFeed(rssFeed) {
-    const url = rssFeed?.url
-    const regio = rssFeed?.regio || [];
-    const sourceName = rssFeed.name;
-
-    const parsedFeed = [];
-    const feed = fetch(url);
-    const feedparser = new FeedParser([]);
-
-    feed.then(function (res) {
-        if (res.status !== 200) {
-            throw new Error('Bad status code');
-        }
-        else {
-            // The response `body` -- res.body -- is a stream
-            res.body.pipe(feedparser);
-        }
-    }, function (err) {
-        // handle any request errors
-    });
-
-    feedparser.on('error', function (error) {
-        console.log("feedparser error in parseFeedAndSendToElastic()" + error);
-    });
-
-    feedparser.on('readable', async function () {
-        var stream = this; // `this` is `feedparser`, which is a stream
-        var item;
-
-        while (item = stream.read()) {
-            const article = formatArticle(item, regio, sourceName);
-            parsedFeed.push(await article);
-        }
-    });
-
-    feedparser.on('finish', function () {
-        // fs.writeFileSync('parsedFeed.json', JSON.stringify(parsedFeed))
-        console.log(parsedFeed);
-    })
-
-}
-
-async function formatArticle(item, country, name) {
-    return item
 }
