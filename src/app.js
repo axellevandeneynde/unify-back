@@ -1,8 +1,9 @@
-const express = require('express')
-const app = express()
+const express = require('express');
 const cors = require('cors');
+const getNews = require('./news-collector/getNews');
 
-const port = process.env.PORT || 3000;
+const app = express();
+const port = process.env.PORT || 3001;
 
 app.use(cors())
 
