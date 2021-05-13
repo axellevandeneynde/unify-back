@@ -13,6 +13,7 @@ module.exports = function (app) {
         const uri = "mongodb+srv://axelle:unifymongodb140@cluster0.ipi5k.mongodb.net/unify?retryWrites=true&w=majority";
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
         client.connect(async err => {
+            console.log(err);
             const articles = client.db("unify").collection("schijnwerper");
             const ids = await articles.find({}).toArray()
             const articleIds = ids.map(item => item.articleId);
@@ -26,9 +27,11 @@ module.exports = function (app) {
             }).then(art => {
                 console.log(art);
                 res.send(art.data);
+                client.close()
             }).catch(err => {
                 console.log(err);
                 res.send([]);
+                client.close()
             })
         }
         )
