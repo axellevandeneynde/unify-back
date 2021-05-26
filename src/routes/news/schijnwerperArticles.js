@@ -25,7 +25,6 @@ module.exports = function (app) {
                 },
                 data: articleIds
             }).then(art => {
-                console.log(art);
                 res.send(art.data);
                 client.close()
             }).catch(err => {
