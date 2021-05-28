@@ -2,9 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 module.exports = function (app, authenticated) {
 
-    app.post('/manage-bookmark', authenticated, function (req, res) {
-        console.log(req.body);
-
+    app.post('/create-bookmark', authenticated, function (req, res) {
         const uri = "mongodb+srv://axelle:unifymongodb140@cluster0.7pkgd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
         client.connect(async err => {
