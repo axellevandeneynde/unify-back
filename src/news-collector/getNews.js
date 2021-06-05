@@ -1,6 +1,5 @@
 const FeedParser = require('feedparser');
 const fetch = require('node-fetch');
-const _ = require('lodash');
 
 module.exports = async function getNews() {
 
@@ -67,7 +66,7 @@ function saveArticles(rssFeedInfo) {
         //--- label articles and send to elastic ---
         try {
             if (articles.length > 0) {
-                fetch('http://127.0.0.1:5001/generateDutchLabels', {
+                fetch('https://unify.pythonanywhere.com/generateDutchLabels', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -90,9 +89,9 @@ function saveArticles(rssFeedInfo) {
 function formatArticle(item, rssFeedInfo) {
     return {
         url: item.link,
-        description: item.summary || item.description,
+        description: item.summary || item.description || '',
         date: item.pubdate,
-        image: item.image.url || item.enclosures[0].url,
+        image: item.image?.url || item.enclosures[0]?.url || '',
         title: item.title,
         labels: [],
         id: item.guid || item.link,
@@ -103,6 +102,7 @@ function formatArticle(item, rssFeedInfo) {
         source_website: rssFeedInfo.website,
         source_categories: rssFeedInfo.categories,
         source_regions: rssFeedInfo.regions,
+        biased: rssFeedInfo.biased
     }
 }
 
@@ -116,7 +116,7 @@ function sendArticlesToElastic(articles) {
         },
         body: JSON.stringify(articles)
     }).then(async res => {
-        console.log(await res.json());
+        // console.log(await res.json());
     }).catch(err => {
         console.log("error in sending data to elasticsearch:" + err)
     })
