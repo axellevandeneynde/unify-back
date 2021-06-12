@@ -10,13 +10,23 @@
 
 <body>
     <h1>This is the Unify back-end api</h1>
-    <h2>Routes:</h2>
+    <h2>Routes</h2>
+    <h3>Unprotected</h3>
     <ul>
-        <li>
-            <h3>/new-rss-feed</h3>
-            <p>POST</p>
-            <p>{}</p>
-        </li>
+        <li>GET /news-categories</li>
+        <li>GET /news-locations</li>
+        <li>GET /news-sources</li>
+        <li>GET /schijnwerper-articles</li>
+    </ul>
+    <h3>protected</h3>
+    <p>These routes can only be accessed through the Unify front-end</p>
+    <a href='https://unify-ff3ae.web.app'>Unify front-end</a>
+    <ul>
+        <li>POST /create-bookmark</li>
+        <li>POST /delete-bookmark</li>
+        <li>POST /get-bookmarks</li>
+        <li>POST /create-new-feed</li>
+        <li>POST /get-user-feeds</li>
     </ul>
 </body>
 
