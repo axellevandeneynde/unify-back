@@ -1,4 +1,4 @@
-# Unify (front-end)
+# Unify (back-end)
 
 This repository contains the back-end for the project Unify. It is part of the Final Work of Axelle Vanden Eynde for the Bachelor Multimedia and Communication Technology at the Erasmus University College. 
 
