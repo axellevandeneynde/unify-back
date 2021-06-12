@@ -166,7 +166,7 @@ function formatArticle(item, rssFeedInfo) {
 }
 
 function sendArticlesToElastic(articles) {
-    const elasticUrl = 'https://enterprise-search-deployment-2e3053.ent.westeurope.azure.elastic-cloud.com/api/as/v1/engines/unify/rssFeedInfouments';
+    const elasticUrl = 'https://enterprise-search-deployment-2e3053.ent.westeurope.azure.elastic-cloud.com/api/as/v1/engines/unify/documents';
     fetch(elasticUrl, {
         method: 'post',
         headers: {
