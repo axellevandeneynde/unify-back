@@ -52,13 +52,15 @@ It is strongly advised to add new rss routes by using the [admin platform](https
 These routes are only accesible through the [Unify front-end](https://github.com/axellevandeneynde/unify-front) by logged-in users.
 
 **Bookmarks**
-POST `/create-bookmark`
-POST `/delete-bookmark`
-POST `/get-bookmarks`
+
+- POST `/create-bookmark`
+- POST `/delete-bookmark`
+- POST `/get-bookmarks`
 
 **Personal feeds**
-POST `/create-new-feed` (can also be used to update feed)
-POST `/get-user-feeds`
+
+- POST `/create-new-feed` (can also be used to update feed)
+- POST `/get-user-feeds`
 
 ## Functions
 
