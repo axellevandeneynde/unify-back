@@ -66,7 +66,7 @@ function saveArticles(rssFeedInfo) {
         //--- label articles and send to elastic ---
         try {
             if (articles.length > 0) {
-                fetch('https://unify.pythonanywhere.com/generateDutchLabels', {
+                fetch('http://127.0.0.1:5000/generateDutchLabels', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -87,6 +87,61 @@ function saveArticles(rssFeedInfo) {
 }
 
 function formatArticle(item, rssFeedInfo) {
+    const now = new Date();
+    const placeHolderDescription = '<ul><li>Dit zijn de aandachtspunten voor de betrouwbaarheid van deze bron. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li><li>Praesent scelerisque vel arcu non porttitor. Phasellus nec pretium eros. </li><li>Maecenas elit erat, lobortis et dictum vitae, dignissim eu magna.</li></ul>'
+    let trust;
+    switch (rssFeedInfo.name) {
+        case 'De Tijd':
+        case 'De Standaard':
+        case 'De Morgen':
+        case 'vrt nws':
+            trust = {
+                score: 9,
+                description: placeHolderDescription,
+                written_by: 'Jan Janssens',
+                last_update: now.toISOString()
+            }
+            break;
+        case 'Het Belang van Limburg':
+        case 'Gazet van Antwerpen':
+        case 'Het Nieuwsblad':
+        case 'Bruzz':
+        case 'Het Laatste Nieuws':
+            trust = {
+                score: 8,
+                description: placeHolderDescription,
+                written_by: 'Jane dhoe',
+                last_update: now.toISOString()
+            }
+        case 'MO':
+        case 'MO*':
+            trust = {
+                score: 7,
+                description: placeHolderDescription,
+                written_by: 'Jane dhoe',
+                last_update: now.toISOString()
+            }
+        case 'Apache':
+        case 'Doorbraak':
+        case 'De Wereld Morgen':
+            trust = {
+                score: 5,
+                description: placeHolderDescription,
+                written_by: 'Axelle Vanden Eynde',
+                last_update: now.toISOString()
+            }
+            break;
+
+        default:
+            trust = {
+                score: 7,
+                description: placeHolderDescription,
+                written_by: 'Axelle Vanden Eynde',
+                last_update: now.toISOString()
+            }
+            break;
+    }
+
     return {
         url: item.link,
         description: item.summary || item.description || '',
@@ -102,12 +157,16 @@ function formatArticle(item, rssFeedInfo) {
         source_website: rssFeedInfo.website,
         source_categories: rssFeedInfo.categories,
         source_regions: rssFeedInfo.regions,
-        biased: rssFeedInfo.biased
+        biased: rssFeedInfo.biased,
+        trust_score: trust.trust_score,
+        trust_description: trust.trust_description,
+        trust_written_by: trust.trust_written_by,
+        trust_last_update: trust.trust_last_update,
     }
 }
 
 function sendArticlesToElastic(articles) {
-    const elasticUrl = 'https://enterprise-search-deployment-2e3053.ent.westeurope.azure.elastic-cloud.com/api/as/v1/engines/unify/documents';
+    const elasticUrl = 'https://enterprise-search-deployment-2e3053.ent.westeurope.azure.elastic-cloud.com/api/as/v1/engines/unify/rssFeedInfouments';
     fetch(elasticUrl, {
         method: 'post',
         headers: {

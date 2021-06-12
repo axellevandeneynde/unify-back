@@ -3,13 +3,14 @@ const cors = require('cors');
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const getNews = require('./news-collector/getNews');
+const elasticUpdateAllTrust = require('./elastic-manager/update-all-trust');
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 const authConfig = {
     issuer: 'https://dev--gys6ql4.eu.auth0.com/',
-    aud: 'http://localhost:3001/',
+    aud: process.env.REACT_APP_UNIFY_BACK,
     algorithms: ['RS256'],
 };
 
