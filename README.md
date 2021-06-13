@@ -41,9 +41,9 @@ name:"",
 logo:"",
 description:"",
 language:"dutch",
-"categories":[""],
-"regions":[""],
-"biased":"true" || "false"
+categories:[""],
+regions:[""],
+biased:"true" || "false"
 }
 ```
 It is strongly advised to add new rss routes by using the [admin platform](https://github.com/axellevandeneynde/unify-admin)
