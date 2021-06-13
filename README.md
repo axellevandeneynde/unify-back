@@ -62,6 +62,10 @@ These routes are only accesible through the [Unify front-end](https://github.com
 - POST `/create-new-feed` (can also be used to update feed)
 - POST `/get-user-feeds`
 
+**Check-new-user**
+- POST /check-new-user
+
+This routes checks if the user is already registered in MongoDB. If this is not the case a new document will be created.
 ## Functions
 
 This API is also able to manage news updates with the function `getNews()`. This function runs automatically every 30min. For it to work the [unify news tag generator](https://github.com/axellevandeneynde/unify-news-tag-generator) needs to be running locally. 

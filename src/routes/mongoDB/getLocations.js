@@ -1,6 +1,5 @@
 const express = require('express')
 const MongoClient = require('mongodb').MongoClient;
-const axios = require('axios');
 
 module.exports = function (app) {
 
