@@ -29,7 +29,10 @@ module.exports = function (app, authenticated) {
                         res.send({ status: 'create feed failed' })
                         console.log('failed to create user feed');
                     }
-                    res.send({ status: 'new user feed created' });
+                    res.send({
+                        status: 'new user feed created',
+                        feedId: feed.id
+                    });
                     client.close()
                 })
         })
